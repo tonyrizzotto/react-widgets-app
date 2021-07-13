@@ -1,8 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const Dropdown = ({ options, selected, onSelectedChange }) => {
   // Initialize state for the opening/closing of dropdown
   const [open, setOpen] = useState(false);
+  const ref = useRef();
+
+  useEffect(() => {
+    document.body.addEventListener(
+      'click',
+      (event) => {
+        //the contains method belonds to all DOM elements
+        if (ref.current.contains(event.target)) {
+          return;
+        }
+        setOpen(false);
+      },
+      { capture: true }
+    );
+  }, []);
 
   const renderedOptions = options.map((option) => {
     // check if the currently selected item is = to the option.value
@@ -24,7 +39,7 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
   });
 
   return (
-    <div className="ui form">
+    <div className="ui form" ref={ref}>
       <div className="field">
         <label className="label">Select a Color</label>
         {/* Close dropdown by removing 'visible active' and 'visible transition' from the menu */}
