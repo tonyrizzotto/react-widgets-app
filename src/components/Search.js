@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { resultingClientExists } from 'workbox-core/_private';
 
 const Search = () => {
   const [term, setTerm] = useState('');
-
+  const [debouncedTerm, setDebouncedTerm] = useState(term);
   // you need to store the results of an api call into state, so it can be accessed.
   const [results, setResults] = useState([]);
 
-  // whenever the component rerenders, and the state of Term has changed, run this code.
+  //debouned UseEffect
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedTerm(term);
+    }, 750);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [term]);
+
+  // This will only run when the compoment is first rendered, or debounced term changes.
   useEffect(() => {
     //you can't use Async/Await inside of useEffect without defining a new function or IIFE
     const search = async () => {
@@ -19,29 +29,38 @@ const Search = () => {
           list: 'search',
           origin: '*',
           format: 'json',
-          srsearch: term,
+          srsearch: debouncedTerm,
         },
       });
       setResults(data.query.search);
     };
 
-    // only make a request if there is a term and no results yet. This would be the first request on initial render
-    if (term && !results.length) {
+    //Make sure to call search only if there is a debounced term
+    if (debouncedTerm) {
       search();
-    } else {
-      // if term is blank, don't run a search
-      const timeoutId = setTimeout(() => {
-        if (term) {
-          search();
-        }
-      }, 500);
-      // The only thing you can return in useEffect is another function. This one is used as a cleanup to reset the timer while someone is typing. This will prevent multiple unnecessary requests to the API
-      return () => {
-        clearTimeout(timeoutId);
-      };
     }
-  }, [term]);
+  }, [debouncedTerm]);
 
+  /** This previous code worked, but had a bug where a 2nd request was made to the API after the term was submitted. 
+  // // whenever the component rerenders, and the state of Term has changed, run this code.
+  // useEffect(() => {
+  //   // only make a request if there is a term and no results yet. This would be the first request on initial render
+  //   if (term && !results.length) {
+  //     search();
+  //   } else {
+  //     // if term is blank, don't run a search
+  //     const timeoutId = setTimeout(() => {
+  //       if (term) {
+  //         search();
+  //       }
+  //     }, 500);
+  //     // The only thing you can return in useEffect is another function. This one is used as a cleanup to reset the timer while someone is typing. This will prevent multiple unnecessary requests to the API
+  //     return () => {
+  //       clearTimeout(timeoutId);
+  //     };
+  //   }
+  // }, [term, results.length]);
+ */
   const renderedResults = results.map((result) => {
     return (
       <div key={result.pageid} className="item">
@@ -50,6 +69,7 @@ const Search = () => {
             className="ui button"
             href={`https://en.wikipedia.org?curid=${result.pageid}`}
             target="_blank"
+            rel="noreferrer"
           >
             Go
           </a>
