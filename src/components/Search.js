@@ -41,7 +41,7 @@ const Search = () => {
     }
   }, [debouncedTerm]);
 
-  /** This previous code worked, but had a bug where a 2nd request was made to the API after the term was submitted. 
+  /** This previous code worked, but had a bug where a 2nd request was made to the API after the term was submitted. Leaving for reference
   // // whenever the component rerenders, and the state of Term has changed, run this code.
   // useEffect(() => {
   //   // only make a request if there is a term and no results yet. This would be the first request on initial render
