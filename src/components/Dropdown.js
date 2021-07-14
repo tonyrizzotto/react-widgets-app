@@ -28,6 +28,7 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
       // in React, null means render nothing
       return null;
     }
+
     return (
       <div
         key={option.value}
@@ -39,25 +40,39 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
         {option.label}
       </div>
     );
+    console.log();
   });
 
   return (
-    <div className="ui form" ref={ref}>
-      <div className="field">
-        <label className="label">Select a Color</label>
-        {/* Close dropdown by removing 'visible active' and 'visible transition' from the menu */}
-        <div
-          onClick={() => {
-            setOpen(!open);
-          }}
-          className={`ui selection dropdown ${open ? 'visible active' : ''}`}
-        >
-          <i className="dropdown icon"></i>
-          <div className="text">{selected.label}</div>
-          <div className={`menu ${open ? 'visible transition' : ''}`}>
-            {renderedOptions}
+    <div>
+      <div className="ui form" ref={ref}>
+        <div className="field">
+          <label className="label">Select a Color</label>
+          {/* Close dropdown by removing 'visible active' and 'visible transition' from the menu */}
+          <div
+            onClick={() => {
+              setOpen(!open);
+            }}
+            className={`ui selection dropdown ${open ? 'visible active' : ''}`}
+          >
+            <i className="dropdown icon"></i>
+            <div className="text">{selected.label}</div>
+            <div className={`menu ${open ? 'visible transition' : ''}`}>
+              {renderedOptions}
+            </div>
           </div>
         </div>
+      </div>
+      <div className="ui container">
+        <p
+          style={{
+            color: `${selected.value}`,
+            paddingTop: '25px',
+            fontSize: '20px',
+          }}
+        >
+          The selected color is {selected.value}!
+        </p>
       </div>
     </div>
   );
