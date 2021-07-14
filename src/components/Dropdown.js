@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const Dropdown = ({ options, selected, onSelectedChange }) => {
+const Dropdown = ({ options, selected, onSelectedChange, label }) => {
   // Initialize state for the opening/closing of dropdown
   const [open, setOpen] = useState(false);
   const ref = useRef();
@@ -46,7 +46,7 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
     <div>
       <div className="ui form" ref={ref}>
         <div className="field">
-          <label className="label">Select a Color</label>
+          <label className="label">{label}</label>
           {/* Close dropdown by removing 'visible active' and 'visible transition' from the menu */}
           <div
             onClick={() => {
@@ -62,7 +62,7 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
           </div>
         </div>
       </div>
-      <div className="ui container">
+      {/* <div className="ui container">
         <p
           style={{
             color: `${selected.value}`,
@@ -72,7 +72,7 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
         >
           The selected color is {selected.value}!
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };

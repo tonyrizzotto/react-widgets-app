@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Accordion from './components/Accordion';
 import Search from './components/Search';
 import Dropdown from './components/Dropdown';
+import Translate from './components/Translate';
 
 //Custom data to pull for the Accordion
 const items = [
@@ -44,7 +45,7 @@ const App = (props) => {
     <div className="ui container">
       {/* <Accordion items={items} /> */}
       {/* <Search /> */}
-      <button
+      {/* <button
         onClick={() => {
           setShowDropdown(!showDropdown);
         }}
@@ -57,7 +58,8 @@ const App = (props) => {
           selected={selected}
           onSelectedChange={setSelected}
         />
-      ) : null}
+      ) : null} */}
+      <Translate />
     </div>
   );
 };
