@@ -40,7 +40,6 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
         {option.label}
       </div>
     );
-    console.log();
   });
 
   return (
