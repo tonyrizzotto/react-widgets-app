@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Search = () => {
-  const [term, setTerm] = useState('');
+  const [term, setTerm] = useState('programming');
   const [debouncedTerm, setDebouncedTerm] = useState(term);
   // you need to store the results of an api call into state, so it can be accessed.
   const [results, setResults] = useState([]);

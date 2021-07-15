@@ -18,8 +18,6 @@ const Convert = ({ language, text }) => {
     //clear out the timerId
     return () => {
       clearTimeout(timerId);
-      {
-      }
     };
   }, [text]);
 
